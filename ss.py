@@ -1,6 +1,8 @@
 ##
 import requests
 
+#example of how the request works without UI
+
 def customer():
     url="https://pizzapos-837174473504.us-south1.run.app/api/v1/Customer"
     response = requests.get(url)
