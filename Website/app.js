@@ -1,3 +1,14 @@
+//THIS IS AI GENERATED PLEASE CREATE a new js file this is just for testing
+
+
+
+
+
+
+
+
+
+
 // Wait for the HTML document to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
 
