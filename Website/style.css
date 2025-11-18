@@ -1,0 +1,258 @@
+/* Basic Setup */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f0f2f5;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Screen Management */
+.screen {
+    display: none; /* Hide all screens by default */
+    padding: 24px 30px;
+    animation: fadeIn 0.3s;
+}
+
+.screen.active {
+    display: block; /* Show only the active screen */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Typography */
+h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 24px;
+    color: #333;
+}
+
+.welcome {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label,
+.form-group legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+.form-row .form-group {
+    flex: 1;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Important for 100% width */
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+}
+fieldset div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+fieldset label {
+    font-weight: normal;
+    font-size: 1em;
+}
+
+.help-text {
+    font-size: 0.8em;
+    color: #666;
+    margin: 6px 0 0 0;
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+/* Menu */
+.menu-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.btn-category {
+    padding: 20px;
+    font-size: 1.2em;
+    background: #f8f9fa;
+    border: 1px solid #eee;
+}
+
+/* Item Lists (Category & Pizza Toppings) */
+.item-list, #pizza-toppings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+.item-card-info {
+    font-weight: 500;
+}
+.item-card-info span {
+    font-weight: normal;
+    color: #555;
+    font-size: 0.9em;
+}
+.btn-add-item {
+    padding: 8px 14px;
+    font-size: 0.9em;
+}
+
+/* Pizza Topping Card */
+.topping-card {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+/* Cart & Checkout */
+.cart-items, .order-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.cart-item-details {
+    flex-grow: 1;
+}
+.cart-item-details .item-name {
+    font-weight: 600;
+}
+.cart-item-details .item-desc {
+    font-size: 0.85em;
+    color: #666;
+    font-style: italic;
+}
+.cart-item-price {
+    font-weight: 600;
+    margin-left: 10px;
+}
+.cart-total, .price-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    margin-bottom: 16px;
+}
+.price-line {
+    font-size: 1em;
+    margin-bottom: 8px;
+}
+.price-line.total {
+    font-size: 1.2em;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+/* Messages */
+.message {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    display: none; /* Hide by default */
+}
+.message.error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    display: block;
+}
+.message.success {
+    color: #270;
+    background-color: #DFF2BF;
+    display: block;
+}
