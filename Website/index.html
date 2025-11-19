@@ -1,200 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panic Party Pizzeria</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="app.js" defer></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="app-container">
-        <div id="login-screen" class="screen active">
-            <form id="login-form">
-                <h2>Mom and Pop's Pizzeria</h2>
-                <div id="login-message" class="message"></div>
+      <div id="login-screen" class="screen active">
+        <form id="login-form">
+          <h2>Mom and Pop's Pizzeria</h2>
+          <div id="login-message" class="message"></div>
 
-                <div class="form-group">
-                    <label for="login-phone">Enter phone number</label>
-                    <input type="tel" id="login-phone" required>
-                </div>
+          <div class="form-group">
+            <label for="login-phone">Enter phone number</label>
+            <input type="tel" id="login-phone" required />
+          </div>
 
-                <div class="form-group">
-                    <label for="login-password">Enter password</label>
-                    <input type="password" id="login-password" required>
-                </div>
+          <div class="form-group">
+            <label for="login-password">Enter password</label>
+            <input type="password" id="login-password" required />
+          </div>
 
-                <button type="submit" class="btn btn-primary">Log In</button>
-                <button type="button" id="goto-signup-btn" class="btn btn-secondary">Sign Up</button>
-            </form>
-        </div>
+          <button type="submit" class="btn btn-primary">Log In</button>
+          <button type="button" id="goto-signup-btn" class="btn btn-secondary">
+            Sign Up
+          </button>
+        </form>
+      </div>
 
-        <div id="signup-screen" class="screen">
-            <form id="signup-form">
-                <h2>Create Account</h2>
-                <div id="signup-message" class="message"></div>
+      <div id="signup-screen" class="screen">
+        <form id="signup-form">
+          <h2>Create Account</h2>
+          <div id="signup-message" class="message"></div>
 
-                <div class="form-group">
-                    <label for="signup-phone">Enter phone number</label>
-                    <input type="tel" id="signup-phone" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="signup-first-name">First Name</label>
-                        <input type="text" id="signup-first-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-last-name">Last Name</label>
-                        <input type="text" id="signup-last-name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="signup-address">Address</label>
-                    <input type="text" id="signup-address" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-card-number">Card Number</label>
-                    <input type="text" id="signup-card-number" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Create password</label>
-                    <input type="password" id="signup-password" required>
-                    <p class="help-text">
-                        * Must contain a special character, one capital letter, a number, and at least 12 characters in length.
-                    </p>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-                <button type="button" id="goto-login-btn" class="btn btn-secondary">Back to Log In</button>
-            </form>
-        </div>
-
-        <div id="menu-home-screen" class="screen">
-            <h2>Mom and Pop's Pizzeria</h2>
-            <div id="welcome-message" class="welcome"></div>
-            <div class="menu-categories">
-                <button type="button" class="btn-category" data-category="Pizza">Pizza</button>
-                <button type="button" class="btn-category" data-category="Drinks">Drinks</button>
-                <button type="button" class="btn-category" data-category="Desserts">Desserts</button>
+          <div class="form-group">
+            <label for="signup-phone">Enter phone number</label>
+            <input type="tel" id="signup-phone" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-first-name">First Name</label>
+              <input type="text" id="signup-first-name" required />
             </div>
-            <button type="button" id="goto-cart-btn-home" class="btn btn-secondary">View Cart (0)</button>
-            <button type="button" id="logout-btn" class="btn btn-secondary">Sign Out</button>
-        </div>
-
-        <div id="menu-category-screen" class="screen">
-            <h2 id="category-title">Menu</h2>
-            <div id="category-message" class="message"></div>
-            <div id="category-items-list" class="item-list">
-                </div>
-            <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back</button>
-        </div>
-
-        <div id="menu-pizza-screen" class="screen">
-            <form id="pizza-form">
-                <h2>Customize Your Pizza</h2>
-                <div id="pizza-message" class="message"></div>
-
-                <fieldset class="form-group">
-                    <legend>Size</legend>
-                    <label><input type="radio" name="size" value="S" checked> S</label>
-                    <label><input type="radio" name="size" value="Med"> Med</label>
-                    <label><input type="radio" name="size" value="Large"> Large</label>
-                    <label><input type="radio" name="size" value="XL"> XL</label>
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <legend>Crust</legend>
-                    <div id="pizza-crust-options"></div>
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <legend>Sauce</legend>
-                    <div id="pizza-sauce-options"></div>
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <legend>Toppings</legend>
-                    <div id="pizza-toppings-list"></div>
-                </fieldset>
-
-                <button type="submit" class="btn btn-primary">Add to Cart</button>
-                <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back</button>
-            </form>
-        </div>
-
-        <div id="cart-screen" class="screen">
-            <h2>Your Cart</h2>
-
-            <div id="cart-empty-message" class="message" style="display: none;">
-                Cart Is Empty...
+            <div class="form-group">
+              <label for="signup-last-name">Last Name</label>
+              <input type="text" id="signup-last-name" required />
             </div>
+          </div>
+          <div class="form-group">
+            <label for="signup-address">Address</label>
+            <input type="text" id="signup-address" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-card-number">Card Number</label>
+            <input type="text" id="signup-card-number" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Create password</label>
+            <input type="password" id="signup-password" required />
+            <p class="help-text">
+              * Must contain a special character, one capital letter, a number,
+              and at least 12 characters in length.
+            </p>
+          </div>
 
-            <div id="cart-items-list" class="cart-items">
-                </div>
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+          <button type="button" id="goto-login-btn" class="btn btn-secondary">
+            Back to Log In
+          </button>
+        </form>
+      </div>
 
-            <div id="cart-summary" style="display: none;">
-                <hr>
-                <div class="cart-total">
-                    <strong>Total:</strong>
-                    <strong id="cart-total-price">$0.00</strong>
-                </div>
-                <button type="button" id="goto-checkout-btn" class="btn btn-primary">Checkout</button>
+      <div id="menu-home-screen" class="screen">
+        <h2>Mom and Pop's Pizzeria</h2>
+        <div id="welcome-message" class="welcome"></div>
+        <div class="menu-categories">
+          <button type="button" class="btn-category" data-category="Pizza">
+            Pizza
+          </button>
+          <button type="button" class="btn-category" data-category="Drinks">
+            Drinks
+          </button>
+          <button type="button" class="btn-category" data-category="Desserts">
+            Desserts
+          </button>
+        </div>
+        <button type="button" id="goto-cart-btn-home" class="btn btn-secondary">
+          View Cart (0)
+        </button>
+        <button type="button" id="logout-btn" class="btn btn-secondary">
+          Sign Out
+        </button>
+      </div>
+
+      <div id="menu-category-screen" class="screen">
+        <h2 id="category-title">Menu</h2>
+        <div id="category-message" class="message"></div>
+        <div id="category-items-list" class="item-list"></div>
+        <button
+          type="button"
+          class="btn btn-secondary btn-back"
+          data-target="menu-home-screen"
+        >
+          Back
+        </button>
+      </div>
+
+      <div id="menu-pizza-screen" class="screen">
+        <form id="pizza-form">
+          <h2>Customize Your Pizza</h2>
+          <div id="pizza-message" class="message"></div>
+
+          <fieldset class="form-group">
+            <legend>Size</legend>
+            <label
+              ><input type="radio" name="size" value="S" checked /> S</label
+            >
+            <label><input type="radio" name="size" value="Med" /> Med</label>
+            <label
+              ><input type="radio" name="size" value="Large" /> Large</label
+            >
+            <label><input type="radio" name="size" value="XL" /> XL</label>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Crust</legend>
+            <div id="pizza-crust-options"></div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Sauce</legend>
+            <div id="pizza-sauce-options"></div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Toppings</legend>
+            <div id="pizza-toppings-list"></div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-back"
+            data-target="menuHome"
+          >
+            Back
+          </button>
+        </form>
+      </div>
+
+      <div id="cart-screen" class="screen">
+        <h2>Your Cart</h2>
+
+        <div id="cart-empty-message" class="message" style="display: none">
+          Cart Is Empty...
+        </div>
+
+        <div id="cart-items-list" class="cart-items"></div>
+
+        <div id="cart-summary" style="display: none">
+          <hr />
+          <div class="cart-total">
+            <strong>Total:</strong>
+            <strong id="cart-total-price">$0.00</strong>
+          </div>
+          <button type="button" id="goto-checkout-btn" class="btn btn-primary">
+            Checkout
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-secondary btn-back"
+          data-target="menuHome"
+        >
+          Back (To Menu)
+        </button>
+      </div>
+
+      <div id="checkout-screen" class="screen">
+        <form id="checkout-form">
+          <h2>Checkout</h2>
+
+          <div class="order-summary">
+            <h3>Your Order:</h3>
+            <div id="checkout-items-list"></div>
+            <div id="checkout-subtotal" class="price-line">
+              <span>Subtotal:</span><span>$0.00</span>
             </div>
+            <div id="checkout-tax" class="price-line">
+              <span>Tax:</span><span>$0.00</span>
+            </div>
+            <div id="checkout-total" class="price-line total">
+              <strong>Total:</strong><strong>$0.00</strong>
+            </div>
+          </div>
 
-            <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back (To Menu)</button>
-        </div>
+          <hr />
 
-        <div id="checkout-screen" class="screen">
-            <form id="checkout-form">
-                <h2>Checkout</h2>
+          <h3>Payment Details</h3>
+          <div id="checkout-message" class="message"></div>
 
-                <div class="order-summary">
-                    <h3>Your Order:</h3>
-                    <div id="checkout-items-list"></div>
-                    <div id="checkout-subtotal" class="price-line"><span>Subtotal:</span><span>$0.00</span></div>
-                    <div id="checkout-tax" class="price-line"><span>Tax:</span><span>$0.00</span></div>
-                    <div id="checkout-total" class="price-line total"><strong>Total:</strong><strong>$0.00</strong></div>
-                </div>
+          <div class="form-group">
+            <label for="card-number">Enter Card Number:</label>
+            <input type="text" id="card-number" required />
+          </div>
 
-                <hr>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="card-expiry">MM/YY</label>
+              <input
+                type="text"
+                id="card-expiry"
+                placeholder="MM/YY"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="card-cvv">CVV</label>
+              <input type="text" id="card-cvv" placeholder="CVV" required />
+            </div>
+          </div>
 
-                <h3>Payment Details</h3>
-                <div id="checkout-message" class="message"></div>
+          <div class="form-group">
+            <label for="card-zip">Billing ZIP Code</label>
+            <input type="text" id="card-zip" required />
+          </div>
 
-                <div class="form-group">
-                    <label for="card-number">Enter Card Number:</label>
-                    <input type="text" id="card-number" required>
-                </div>
+          <button type="submit" class="btn btn-primary">Checkout</button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-back"
+            data-target="cart-screen"
+          >
+            Back (To Cart)
+          </button>
+        </form>
+      </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="card-expiry">MM/YY</label>
-                        <input type="text" id="card-expiry" placeholder="MM/YY" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="card-cvv">CVV</label>
-                        <input type="text" id="card-cvv" placeholder="CVV" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="card-zip">Billing ZIP Code</label>
-                    <input type="text" id="card-zip" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Checkout</button>
-                <button type="button" class="btn btn-secondary btn-back" data-target="cart-screen">Back (To Cart)</button>
-            </form>
-        </div>
-
-        <div id="confirmation-screen" class="screen">
-            <h2>Thank You For Shopping</h2>
-            <p>Your order was placed</p>
-            <p id="confirmation-time"></p>
-            <button type="button" id="place-another-order-btn" class="btn btn-primary">Place Another Order?</button>
-        </div>
+      <div id="confirmation-screen" class="screen">
+        <h2>Thank You For Shopping</h2>
+        <p>Your order was placed</p>
+        <p id="confirmation-time"></p>
+        <button
+          type="button"
+          id="place-another-order-btn"
+          class="btn btn-primary"
+        >
+          Place Another Order?
+        </button>
+      </div>
     </div>
-
-</body>
+  </body>
 </html>
