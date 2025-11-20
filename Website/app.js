@@ -44,6 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Banana Peppers", category: "Topping", price: 0.5 },
       { name: "Pineapple", category: "Topping", price: 0.8 },
       { name: "Pepperoni", category: "Topping", price: 1.0 },
+      // Drinks (2L)
+      { name: "Coke (2L)", category: "Drinks", price: 2.99 },
+      { name: "Sprite (2L)", category: "Drinks", price: 2.79 },
+      { name: "Lemonade (2L)", category: "Drinks", price: 2.49 },
+      // Desserts
+      { name: "Brownie", category: "Desserts", price: 2.5 },
+      { name: "Chocolate Chip Cookie", category: "Desserts", price: 1.5 },
+      { name: "Oatmeal Raisin Cookie", category: "Desserts", price: 1.3 },
     ];
 
     localItems.forEach((li) => {
@@ -164,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        state.currentUsder = await response.json();
+        state.currentUser = await response.json();
         // This line correctly uses first_name
         dynamic.welcome.textContent = `Welcome, ${
           state.currentUser.first_name || "Customer"
