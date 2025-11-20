@@ -273,7 +273,41 @@ document.addEventListener("DOMContentLoaded", () => {
     items.forEach((item) => {
       const card = document.createElement("div");
       card.className = "item-card";
-      card.innerHTML = `
+      // For Drinks and Desserts show quantity controls (+ / -), otherwise show Add button
+      if (categoryName === "Drinks" || categoryName === "Desserts") {
+        const currentQty = getCartItemQuantity(item.id);
+        // Flip order: show + on left, quantity in middle, - on right
+        card.innerHTML = `
+                <div class="item-card-info">
+                    ${item.name}
+                    <span>($${item.price.toFixed(2)})</span>
+                </div>
+                <div class="item-qty-controls">
+                    <button class="btn btn-primary btn-qty-plus" data-item-id="${
+                      item.id
+                    }">+</button>
+                    <span id="qty-${
+                      item.id
+                    }" class="item-qty">${currentQty}</span>
+                    <button class="btn btn-secondary btn-qty-minus" data-item-id="${
+                      item.id
+                    }">-</button>
+                </div>
+            `;
+        // Attach listeners for quantity buttons (plus is on the left now)
+        card.querySelector(".btn-qty-plus").addEventListener("click", () => {
+          changeItemQuantity(item.id, 1);
+          showMessage(
+            messages.category,
+            `* Added ${item.name} to Cart *`,
+            "success"
+          );
+        });
+        card.querySelector(".btn-qty-minus").addEventListener("click", () => {
+          changeItemQuantity(item.id, -1);
+        });
+      } else {
+        card.innerHTML = `
                 <div class="item-card-info">
                     ${item.name}
                     <span>($${item.price.toFixed(2)})</span>
@@ -282,14 +316,15 @@ document.addEventListener("DOMContentLoaded", () => {
                   item.id
                 }">Add</button>
             `;
-      card.querySelector("button").addEventListener("click", () => {
-        handleAddToCart(item.id);
-        showMessage(
-          messages.category,
-          `* Added ${item.name} to Cart *`,
-          "success"
-        );
-      });
+        card.querySelector("button").addEventListener("click", () => {
+          handleAddToCart(item.id);
+          showMessage(
+            messages.category,
+            `* Added ${item.name} to Cart *`,
+            "success"
+          );
+        });
+      }
       dynamic.categoryItems.appendChild(card);
     });
     showScreen("menuCategory");
@@ -307,6 +342,60 @@ document.addEventListener("DOMContentLoaded", () => {
         state.cart.push({ ...item, quantity: 1 });
       }
       updateCartCount();
+    }
+  }
+
+  // Helper to get current quantity of an item in the cart
+  function getCartItemQuantity(itemId) {
+    const id = parseInt(itemId, 10);
+    const ci = state.cart.find((c) => c.id === id && !c.customizations);
+    return ci ? ci.quantity : 0;
+  }
+
+  // Change an item's quantity in the cart by delta (positive or negative).
+  // Ensures quantity never goes below 0. If quantity reaches 0, remove the item.
+  function changeItemQuantity(itemId, delta) {
+    const id = parseInt(itemId, 10);
+    const menuItem = state.menu.find((m) => m.id === id);
+    if (!menuItem) return;
+
+    let cartItem = state.cart.find((c) => c.id === id && !c.customizations);
+    if (cartItem) {
+      cartItem.quantity = Math.max(0, cartItem.quantity + delta);
+      if (cartItem.quantity === 0) {
+        state.cart = state.cart.filter(
+          (c) => !(c.id === id && !c.customizations)
+        );
+      }
+    } else if (delta > 0) {
+      // Add a new item with the requested quantity (delta typically 1)
+      state.cart.push({ ...menuItem, quantity: delta });
+    }
+
+    updateCartCount();
+
+    // Update any visible quantity indicator for this item in the category list
+    const qtyEl = document.getElementById(`qty-${id}`);
+    if (qtyEl) qtyEl.textContent = getCartItemQuantity(id);
+  }
+
+  // Change quantity by cart item id (handles custom pizzas with string ids)
+  function changeCartQuantityByCartId(cartItemId, delta) {
+    const cartItem = state.cart.find((c) => c.id === cartItemId);
+    if (!cartItem) return;
+
+    cartItem.quantity = Math.max(0, cartItem.quantity + delta);
+    if (cartItem.quantity === 0) {
+      state.cart = state.cart.filter((c) => c.id !== cartItemId);
+    }
+
+    updateCartCount();
+
+    // Update category quantity indicator if present (for numeric menu ids)
+    const numericId = parseInt(cartItemId, 10);
+    if (!Number.isNaN(numericId)) {
+      const qtyEl = document.getElementById(`qty-${numericId}`);
+      if (qtyEl) qtyEl.textContent = getCartItemQuantity(numericId);
     }
   }
 
@@ -439,11 +528,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const cartItem = document.createElement("div");
         cartItem.className = "cart-item";
+        // Show - (left) then quantity then + (right) controls in the cart (compact inline buttons)
         cartItem.innerHTML = `
                     <div class="cart-item-details">
-                        <span class="item-name">${item.quantity}x ${
+                        <div class="cart-controls">
+                          <button class="btn-inline btn-cart-minus" data-cart-id="${
+                            item.id
+                          }">-</button>
+                          <span class="item-name">${item.quantity}x ${
           item.name
         }</span>
+                          <button class="btn-inline btn-cart-plus" data-cart-id="${
+                            item.id
+                          }">+</button>
+                        </div>
                         ${
                           item.description
                             ? `<div class="item-desc">${item.description}</div>`
@@ -455,6 +553,31 @@ document.addEventListener("DOMContentLoaded", () => {
                     )}</span>
                 `;
         dynamic.cartItems.appendChild(cartItem);
+
+        // Attach listeners after it's in the DOM
+        cartItem
+          .querySelector(".btn-cart-plus")
+          .addEventListener("click", () => {
+            // For standard menu items (numeric ids) use changeItemQuantity, for pizzas use cart-id helper
+            if (typeof item.id === "number") {
+              changeItemQuantity(item.id, 1);
+              renderCartScreen();
+            } else {
+              changeCartQuantityByCartId(item.id, 1);
+              renderCartScreen();
+            }
+          });
+        cartItem
+          .querySelector(".btn-cart-minus")
+          .addEventListener("click", () => {
+            if (typeof item.id === "number") {
+              changeItemQuantity(item.id, -1);
+              renderCartScreen();
+            } else {
+              changeCartQuantityByCartId(item.id, -1);
+              renderCartScreen();
+            }
+          });
       });
 
       dynamic.cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
