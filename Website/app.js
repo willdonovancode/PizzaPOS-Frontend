@@ -29,21 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- MOCK DATA (For Inventory/Sales ONLY - Login is now Real) ---
-    const mockDB = {
-        employees: [
-            { id: 1, name: "John Dough", status: "Active" },
-            { id: 2, name: "Jane Crust", status: "Active" }
-        ],
-        inventory: [
-            { item: "Dough Ball", quantity: 45, unit: "units" },
-            { item: "Cheese", quantity: 30, unit: "lbs" },
-            { item: "Pepperoni", quantity: 15, unit: "lbs" }
-        ],
-        sales: [
-            { id: 101, total: 25.50, items: "1x Large Pizza" },
-            { id: 102, total: 12.00, items: "2x Coke" }
-        ]
-    };
+    // const mockDB = {
+    //     employees: [
+    //         { id: 1, name: "John Dough", status: "Active" },
+    //         { id: 2, name: "Jane Crust", status: "Active" }
+    //     ],
+    //     inventory: [
+    //         { item: "Dough Ball", quantity: 45, unit: "units" },
+    //         { item: "Cheese", quantity: 30, unit: "lbs" },
+    //         { item: "Pepperoni", quantity: 15, unit: "lbs" }
+    //     ],
+    //     sales: [
+    //         { id: 101, total: 25.50, items: "1x Large Pizza" },
+    //         { id: 102, total: 12.00, items: "2x Coke" }
+    //     ]
+    // };
 
     // Local id generator
     let _localMenuId = -1;
