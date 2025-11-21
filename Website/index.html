@@ -9,84 +9,103 @@
   </head>
   <body>
     <div class="app-container">
-      <div id="login-screen" class="screen active">
-        <form id="login-form">
-          <h2>Mom and Pop's Pizzeria</h2>
-          <div id="login-message" class="message"></div>
 
-          <div class="form-group">
-            <label for="login-phone">Enter phone number</label>
-            <input type="tel" id="login-phone" required />
-          </div>
-
-          <div class="form-group">
-            <label for="login-password">Enter password</label>
-            <input type="password" id="login-password" required />
-          </div>
-
-          <button type="submit" class="btn btn-primary">Log In</button>
-          <button type="button" id="goto-signup-btn" class="btn btn-secondary">
-            Sign Up
-          </button>
-        </form>
-      </div>
-
-      <div id="signup-screen" class="screen">
-        <form id="signup-form">
-          <h2>Create Account</h2>
-          <div id="signup-message" class="message"></div>
-
-          <div class="form-group">
-            <label for="signup-phone">Enter phone number</label>
-            <input type="tel" id="signup-phone" required />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="signup-first-name">First Name</label>
-              <input type="text" id="signup-first-name" required />
+        <div id="opening-screen" class="screen active">
+            <div class="opening-header">
+                <h1>Panic Party Pizzeria</h1>
+                <p>123 Dough Street, Marietta, GA</p>
+                <p>770-555-0199</p>
             </div>
-            <div class="form-group">
-              <label for="signup-last-name">Last Name</label>
-              <input type="text" id="signup-last-name" required />
+            <div class="opening-actions">
+                <button type="button" id="btn-role-customer" class="btn btn-primary">Customer Order</button>
+                <button type="button" id="btn-role-employee" class="btn btn-secondary">Employee Portal</button>
+                <button type="button" id="btn-role-manager" class="btn btn-secondary">Manager Dashboard</button>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="signup-address">Address</label>
-            <input type="text" id="signup-address" required />
-          </div>
-          <div class="form-group">
-            <label for="signup-card-number">Card Number</label>
-            <input type="text" id="signup-card-number" required />
-          </div>
-          <div class="form-group">
-            <label for="signup-password">Create password</label>
-            <input type="password" id="signup-password" required />
-            <p class="help-text">
-              * Must contain a special character, one capital letter, a number,
-              and at least 12 characters in length.
-            </p>
-          </div>
+        </div>
 
-          <button type="submit" class="btn btn-primary">Sign Up</button>
-          <button type="button" id="goto-login-btn" class="btn btn-secondary">
-            Back to Log In
-          </button>
-        </form>
-      </div>
+        <div id="login-screen" class="screen">
+            <form id="login-form">
+                <h2 id="login-title">Log In</h2>
+                <div id="login-message" class="message"></div>
 
-      <div id="menu-home-screen" class="screen">
-        <h2>Mom and Pop's Pizzeria</h2>
-        <div id="welcome-message" class="welcome"></div>
-        <div class="menu-categories">
-          <button type="button" class="btn-category" data-category="Pizza">
-            Pizza
-          </button>
-          <button type="button" class="btn-category" data-category="Drinks">
-            Drinks
-          </button>
-          <button type="button" class="btn-category" data-category="Desserts">
-            Desserts
-          </button>
+                <div class="form-group">
+                    <label for="login-phone">Enter phone number</label>
+                    <input type="tel" id="login-phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Enter password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Log In</button>
+                <button type="button" id="goto-signup-btn" class="btn btn-secondary">New Customer? Sign Up</button>
+                <button type="button" class="btn btn-secondary btn-back" data-target="opening-screen">Back to Home</button>
+            </form>
+        </div>
+
+        <div id="signup-screen" class="screen">
+            <form id="signup-form">
+                <h2>Create Account</h2>
+                <div id="signup-message" class="message"></div>
+
+                <div class="form-group">
+                    <label for="signup-phone">Enter phone number</label>
+                    <input type="tel" id="signup-phone" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="signup-first-name">First Name</label>
+                        <input type="text" id="signup-first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-last-name">Last Name</label>
+                        <input type="text" id="signup-last-name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-address">Address</label>
+                    <input type="text" id="signup-address" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-card-number">Card Number</label>
+                    <input type="text" id="signup-card-number" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Create password</label>
+                    <input type="password" id="signup-password" required>
+                    <p class="help-text">
+                        * Must contain a special character, one capital letter, a number, and at least 12 characters.
+                    </p>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <button type="button" id="goto-login-btn" class="btn btn-secondary">Back to Log In</button>
+            </form>
+        </div>
+
+        <div id="menu-home-screen" class="screen">
+            <div class="header-row">
+                <h2>Menu</h2>
+                <button type="button" id="logout-btn" class="btn-small">Sign Out</button>
+            </div>
+            <div id="welcome-message" class="welcome"></div>
+
+            <div class="menu-categories">
+                <button type="button" class="btn-category" data-category="Pizza">
+                    <strong>Build Your Pizza</strong>
+                    <span>Custom sizes, crusts & toppings</span>
+                </button>
+                <button type="button" class="btn-category" data-category="Drinks">
+                    <strong>Beverages</strong>
+                    <span>Sodas, Water, Juice</span>
+                </button>
+                <button type="button" class="btn-category" data-category="Desserts">
+                    <strong>Desserts</strong>
+                    <span>Sweet treats</span>
+                </button>
+            </div>
+            <button type="button" id="goto-cart-btn-home" class="btn btn-secondary">View Cart (0)</button>
         </div>
         <button type="button" id="goto-cart-btn-home" class="btn btn-secondary">
           View Cart (0)
@@ -136,27 +155,11 @@
             <div id="pizza-sauce-options"></div>
           </fieldset>
 
-          <fieldset class="form-group">
-            <legend>Toppings</legend>
-            <div id="pizza-toppings-list"></div>
-          </fieldset>
-
-          <button type="submit" class="btn btn-primary">Add to Cart</button>
-          <button
-            type="button"
-            class="btn btn-secondary btn-back"
-            data-target="menuHome"
-          >
-            Back
-          </button>
-        </form>
-      </div>
-
-      <div id="cart-screen" class="screen">
-        <h2>Your Cart</h2>
-
-        <div id="cart-empty-message" class="message" style="display: none">
-          Cart Is Empty...
+        <div id="menu-category-screen" class="screen">
+            <h2 id="category-title">Menu</h2>
+            <div id="category-message" class="message"></div>
+            <div id="category-items-list" class="item-list"></div>
+            <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back</button>
         </div>
 
         <div id="cart-items-list" class="cart-items"></div>
@@ -172,87 +175,130 @@
           </button>
         </div>
 
-        <button
-          type="button"
-          class="btn btn-secondary btn-back"
-          data-target="menuHome"
-        >
-          Back (To Menu)
-        </button>
-      </div>
-
-      <div id="checkout-screen" class="screen">
-        <form id="checkout-form">
-          <h2>Checkout</h2>
-
-          <div class="order-summary">
-            <h3>Your Order:</h3>
-            <div id="checkout-items-list"></div>
-            <div id="checkout-subtotal" class="price-line">
-              <span>Subtotal:</span><span>$0.00</span>
+        <div id="cart-screen" class="screen">
+            <h2>Your Cart</h2>
+            <div id="cart-empty-message" class="message" style="display: none;">Cart Is Empty...</div>
+            <div id="cart-items-list" class="cart-items"></div>
+            <div id="cart-summary" style="display: none;">
+                <hr>
+                <div class="cart-total">
+                    <strong>Total:</strong>
+                    <strong id="cart-total-price">$0.00</strong>
+                </div>
+                <button type="button" id="goto-checkout-btn" class="btn btn-primary">Proceed to Payment</button>
             </div>
-            <div id="checkout-tax" class="price-line">
-              <span>Tax:</span><span>$0.00</span>
+            <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back to Menu</button>
+        </div>
+
+        <div id="checkout-screen" class="screen">
+            <form id="checkout-form">
+                <h2>Order Summary & Payment</h2>
+
+                <div class="order-summary">
+                    <h3>Your Order:</h3>
+                    <div id="checkout-items-list"></div>
+                    <div id="checkout-subtotal" class="price-line"><span>Subtotal:</span><span>$0.00</span></div>
+                    <div id="checkout-tax" class="price-line"><span>Tax:</span><span>$0.00</span></div>
+                    <div id="checkout-total" class="price-line total"><strong>Total:</strong><strong>$0.00</strong></div>
+                </div>
+
+                <hr>
+                <h3>Payment Method</h3>
+                <div id="checkout-message" class="message"></div>
+
+                <div class="payment-options">
+                    <label><input type="radio" name="payment-type" value="Card" checked> Credit/Debit Card</label>
+                    <label><input type="radio" name="payment-type" value="Cash"> Cash</label>
+                    <label><input type="radio" name="payment-type" value="Store"> Pay at Store</label>
+                </div>
+
+                <div id="card-details-section">
+                    <div class="form-group">
+                        <label for="card-number">Card Number:</label>
+                        <input type="text" id="card-number">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="card-expiry">MM/YY</label>
+                            <input type="text" id="card-expiry" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-cvv">CVV</label>
+                            <input type="text" id="card-cvv" placeholder="CVV">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-zip">Billing ZIP Code</label>
+                        <input type="text" id="card-zip">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signature">Signature</label>
+                        <input type="text" id="signature" placeholder="Type full name to sign" style="font-family: cursive; font-size: 1.2em;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Confirm Order</button>
+                <button type="button" class="btn btn-secondary btn-back" data-target="cart-screen">Back</button>
+            </form>
+        </div>
+
+        <div id="confirmation-screen" class="screen">
+            <h2>Thank You!</h2>
+            <div class="success-icon">✔</div>
+            <p>Your order has been placed successfully.</p>
+            <p id="confirmation-time"></p>
+            <p id="estimated-pickup">Estimated Pickup: 20 Minutes</p>
+            <button type="button" id="place-another-order-btn" class="btn btn-primary">Place Another Order</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.reload()">Log Out</button>
+        </div>
+
+        <div id="employee-screen" class="screen">
+            <h2>Employee Portal</h2>
+            <div class="dashboard-card">
+                <h3>Time Clock</h3>
+                <p id="clock-status">Status: Clocked Out</p>
+                <button type="button" id="btn-clock-in" class="btn btn-primary">Clock In</button>
+                <button type="button" id="btn-clock-out" class="btn btn-secondary" disabled>Clock Out</button>
             </div>
-            <div id="checkout-total" class="price-line total">
-              <strong>Total:</strong><strong>$0.00</strong>
+            <button type="button" class="btn btn-secondary" onclick="location.reload()">Log Out</button>
+        </div>
+
+        <div id="manager-screen" class="screen">
+            <h2>Manager Dashboard</h2>
+
+            <div class="manager-tabs">
+                <button class="btn-tab active" data-tab="sales">Sales</button>
+                <button class="btn-tab" data-tab="inventory">Inventory</button>
+                <button class="btn-tab" data-tab="employees">Employees</button>
             </div>
-          </div>
 
-          <hr />
-
-          <h3>Payment Details</h3>
-          <div id="checkout-message" class="message"></div>
-
-          <div class="form-group">
-            <label for="card-number">Enter Card Number:</label>
-            <input type="text" id="card-number" required />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="card-expiry">MM/YY</label>
-              <input
-                type="text"
-                id="card-expiry"
-                placeholder="MM/YY"
-                required
-              />
+            <div id="tab-sales" class="tab-content active">
+                <h3>Sales Data</h3>
+                <div class="sales-filters">
+                    <button class="btn-filter" onclick="filterSales('Day')">Day</button>
+                    <button class="btn-filter" onclick="filterSales('Week')">Week</button>
+                    <button class="btn-filter" onclick="filterSales('Month')">Month</button>
+                </div>
+                <div id="sales-list" class="data-list">
+                    </div>
             </div>
-            <div class="form-group">
-              <label for="card-cvv">CVV</label>
-              <input type="text" id="card-cvv" placeholder="CVV" required />
+
+            <div id="tab-inventory" class="tab-content">
+                <h3>Current Inventory</h3>
+                <div id="inventory-list" class="data-list">
+                    </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="card-zip">Billing ZIP Code</label>
-            <input type="text" id="card-zip" required />
-          </div>
+            <div id="tab-employees" class="tab-content">
+                <h3>Employee Roster</h3>
+                <div id="employee-list" class="data-list">
+                    </div>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Checkout</button>
-          <button
-            type="button"
-            class="btn btn-secondary btn-back"
-            data-target="cart-screen"
-          >
-            Back (To Cart)
-          </button>
-        </form>
-      </div>
+            <button type="button" class="btn btn-secondary" onclick="location.reload()">Sign Out</button>
+        </div>
 
-      <div id="confirmation-screen" class="screen">
-        <h2>Thank You For Shopping</h2>
-        <p>Your order was placed</p>
-        <p id="confirmation-time"></p>
-        <button
-          type="button"
-          id="place-another-order-btn"
-          class="btn btn-primary"
-        >
-          Place Another Order?
-        </button>
-      </div>
     </div>
   </body>
 </html>
