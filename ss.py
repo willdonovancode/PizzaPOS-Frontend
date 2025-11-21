@@ -4,7 +4,7 @@ import requests
 #example of how the request works without UI
 
 def customer():
-    url="https://pizzapos-837174473504.us-south1.run.app/api/v1/Customer"
+    url="https://pizzapos-837174473504.us-south1.run.app/api/v1/MenuItem"
     response = requests.get(url)
     #just prints out all customers
     print(response.text)
@@ -13,12 +13,12 @@ def customer():
     #
     #
     #get user name
-    user=input("Enter phonenumber")
-    #user password
-    word=input("Enter password")
-    login={}
-    login["phonenumber"]=user
-    login["password"]=word
+    # user=input("Enter phonenumber")
+    # #user password
+    # word=input("Enter password")
+    # login={}
+    # login["phonenumber"]=user
+    # login["password"]=word
     loginurl="https://pizzapos-837174473504.us-south1.run.app/api/v1/Customer/login"
 
     #send request to backend
@@ -27,15 +27,15 @@ def customer():
     #     "phonenumber":"678",
     #     "password": "sigma"
     # }
-    r2= requests.post(loginurl,json=login)
-    #request returns status code
-    print(r2.status_code)
-    #200 means success
-    #any other code means no sucess
-    if r2.status_code == 200:
-        print("Success")
-    else:
-        print("No!")
+    # r2= requests.post(loginurl,json=login)
+    # #request returns status code
+    # print(r2.status_code)
+    # #200 means success
+    # #any other code means no sucess
+    # if r2.status_code == 200:
+    #     print("Success")
+    # else:
+    #     print("No!")
 
 
 
