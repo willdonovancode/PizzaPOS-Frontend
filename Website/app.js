@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // --- API Configuration ---
 
-    // Pointing to your DEPLOYED Cloud Backend
+    // Pointing DEPLOYED Cloud Backend (deployed on google cloud) //website also deployed on gcp (firebase)
     const API_BASE_URL = "https://pizzapos-837174473504.us-south1.run.app/api/v1";
 
     const API = {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         login: `${API_BASE_URL}/Customer/login`,
         signup: `${API_BASE_URL}/Customer`,
 
-        // Staff Endpoints (Connects to your deployed UserController)
+        // Staff Endpoints
         loginUser: `${API_BASE_URL}/User/login`,
 
         // Menu & Order Endpoints
