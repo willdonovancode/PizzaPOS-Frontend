@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // --- API Configuration ---
-
+    //notes
     // Pointing DEPLOYED Cloud Backend (deployed on google cloud) //website also deployed on gcp (firebase)
     const API_BASE_URL = "https://pizzapos-837174473504.us-south1.run.app/api/v1";
 
