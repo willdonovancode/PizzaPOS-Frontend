@@ -264,10 +264,28 @@ document.addEventListener("DOMContentLoaded", () => {
             showMessage(messages.login, "Connection error.", "error");
         }
     }
+  }
 
-    async function handleSignup(event) {
-        event.preventDefault();
-        clearMessages();
+  async function handleSignup(event) {
+    event.preventDefault();
+    clearMessages();
+
+    // This object correctly sends first_name and last_name
+    const signupData = {
+      phonenumber: forms.signup["signup-phone"].value,
+      password: forms.signup["signup-password"].value,
+      first_name: forms.signup["signup-first-name"].value,
+      last_name: forms.signup["signup-last-name"].value,
+      address: forms.signup["signup-address"].value,
+      cardnumber: forms.signup["signup-card-number"].value,
+    };
+
+    try {
+      const response = await fetch(API.signup, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signupData),
+      });
 
         const signupData = {
             phonenumber: forms.signup["signup-phone"].value,
@@ -319,6 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         populatePizzaBuilder();
     }
+  }
 
     // --- Menu Rendering ---
     function renderCategoryScreen(categoryName) {
@@ -328,9 +347,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const items = state.menu.filter((item) => item.category === categoryName);
 
-        if (items.length === 0) {
-            dynamic.categoryItems.innerHTML = "<p>No items found in this category.</p>";
-        }
+    if (items.length === 0) {
+      dynamic.categoryItems.innerHTML =
+        "<p>No items found in this category.</p>";
+    }
 
         items.forEach((item) => {
             const card = document.createElement("div");
@@ -371,7 +391,73 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             dynamic.categoryItems.appendChild(card);
         });
-        showScreen("menuCategory");
+        card.querySelector(".btn-qty-minus").addEventListener("click", () => {
+          changeItemQuantity(item.id, -1);
+        });
+      } else {
+        card.innerHTML = `
+                <div class="item-card-info">
+                    ${item.name}
+                    <span>($${item.price.toFixed(2)})</span>
+                </div>
+                <button class="btn btn-primary btn-add-item" data-item-id="${
+                  item.id
+                }">Add</button>
+            `;
+        card.querySelector("button").addEventListener("click", () => {
+          handleAddToCart(item.id);
+          showMessage(
+            messages.category,
+            `* Added ${item.name} to Cart *`,
+            "success"
+          );
+        });
+      }
+      dynamic.categoryItems.appendChild(card);
+    });
+    showScreen("menuCategory");
+  }
+
+  function handleAddToCart(itemId) {
+    const item = state.menu.find((i) => i.id === itemId);
+    if (item) {
+      const cartItem = state.cart.find(
+        (ci) => ci.id === itemId && !ci.customizations
+      );
+      if (cartItem) {
+        cartItem.quantity++;
+      } else {
+        state.cart.push({ ...item, quantity: 1 });
+      }
+      updateCartCount();
+    }
+  }
+
+  // Helper to get current quantity of an item in the cart
+  function getCartItemQuantity(itemId) {
+    const id = parseInt(itemId, 10);
+    const ci = state.cart.find((c) => c.id === id && !c.customizations);
+    return ci ? ci.quantity : 0;
+  }
+
+  // Change an item's quantity in the cart by delta (positive or negative).
+  // Ensures quantity never goes below 0. If quantity reaches 0, remove the item.
+  function changeItemQuantity(itemId, delta) {
+    const id = parseInt(itemId, 10);
+    const menuItem = state.menu.find((m) => m.id === id);
+    if (!menuItem) return;
+
+    let cartItem = state.cart.find((c) => c.id === id && !c.customizations);
+    if (cartItem) {
+      cartItem.quantity = Math.max(0, cartItem.quantity + delta);
+      if (cartItem.quantity === 0) {
+        state.cart = state.cart.filter(
+          (c) => !(c.id === id && !c.customizations)
+        );
+      }
+    } else if (delta > 0) {
+      // Add a new item with the requested quantity (delta typically 1)
+      state.cart.push({ ...menuItem, quantity: delta });
     }
 
     function handleAddToCart(itemId) {
@@ -435,7 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const sauces = state.menu.filter((i) => i.category === "Sauce");
         const toppings = state.menu.filter((i) => i.category === "Topping");
 
-        const createRadio = (item, groupName, isChecked) => `
+    const createRadio = (item, groupName, isChecked) => `
             <label>
                 <input type="radio" name="${groupName}" value="${item.id}" ${isChecked ? "checked" : ""}>
                 ${item.name} ($${item.price.toFixed(2)})
@@ -446,9 +532,15 @@ document.addEventListener("DOMContentLoaded", () => {
         dynamic.pizzaToppings.innerHTML = toppings.map((item) => `
             <div class="topping-card">
                 <span>${item.name} ($${item.price.toFixed(2)})</span>
-                <label><input type="radio" name="topping-${item.id}" value="None" checked> None</label>
-                <label><input type="radio" name="topping-${item.id}" value="Half"> Half</label>
-                <label><input type="radio" name="topping-${item.id}" value="Full"> Full</label>
+                <label><input type="radio" name="topping-${
+                  item.id
+                }" value="None" checked> None</label>
+                <label><input type="radio" name="topping-${
+                  item.id
+                }" value="Half"> Half</label>
+                <label><input type="radio" name="topping-${
+                  item.id
+                }" value="Full"> Full</label>
             </div>
         `).join("");
     }
@@ -514,6 +606,16 @@ document.addEventListener("DOMContentLoaded", () => {
             showScreen("menuHome");
         }, 2000);
     }
+    customizations.push(...toppings);
+
+    const pizzaItem = {
+      id: `pizza-${Date.now()}`,
+      name: `${size} Custom Pizza`,
+      price: basePrice,
+      quantity: 1,
+      description: description.join(", "),
+      customizations: customizations,
+    };
 
     function updateCartCount() {
         const count = state.cart.reduce((total, item) => total + item.quantity, 0);
@@ -548,7 +650,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         ${item.description ? `<div class="item-desc">${item.description}</div>` : ""}
                     </div>
-                    <span class="cart-item-price">$${itemTotal.toFixed(2)}</span>
+                    <span class="cart-item-price">$${itemTotal.toFixed(
+                      2
+                    )}</span>
                 `;
                 dynamic.cartItems.appendChild(cartItem);
 
@@ -775,6 +879,56 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         });
+      });
+
+      await Promise.all(itemPromises);
+
+      state.cart = [];
+      updateCartCount();
+      forms.checkout.reset();
+
+      dynamic.confirmationTime.textContent = `At ${new Date().toLocaleTimeString()}`;
+      showScreen("confirmation");
+    } catch (error) {
+      console.error("Checkout error:", error);
+      showMessage(
+        messages.checkout,
+        "Failed to place order. Please try again.",
+        "error"
+      );
+    }
+  }
+
+  // --- Event Listeners Setup ---
+  function initialize() {
+    forms.login.addEventListener("submit", handleLogin);
+    forms.signup.addEventListener("submit", handleSignup);
+    forms.pizza.addEventListener("submit", handlePizzaSubmit);
+    forms.checkout.addEventListener("submit", handleCheckout);
+
+    document.getElementById("goto-signup-btn").addEventListener("click", () => {
+      clearMessages();
+      showScreen("signup");
+    });
+    document.getElementById("goto-login-btn").addEventListener("click", () => {
+      clearMessages();
+      showScreen("login");
+    });
+    document
+      .getElementById("logout-btn")
+      .addEventListener("click", handleLogout);
+
+    document.querySelectorAll(".btn-category").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const category = btn.dataset.category;
+        if (category === "Pizza") {
+          clearMessages();
+          showScreen("menuPizza");
+        } else {
+          renderCategoryScreen(category);
+        }
+      });
+    });
 
         document.querySelectorAll(".btn-back").forEach((btn) => {
             btn.addEventListener("click", () => {
@@ -783,14 +937,18 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        dynamic.cartCountBtn.addEventListener("click", renderCartScreen);
-        document.getElementById("goto-checkout-btn").addEventListener("click", renderCheckoutScreen);
+    dynamic.cartCountBtn.addEventListener("click", renderCartScreen);
+    document
+      .getElementById("goto-checkout-btn")
+      .addEventListener("click", renderCheckoutScreen);
 
-        document.getElementById("place-another-order-btn").addEventListener("click", () => showScreen("menuHome"));
+    document
+      .getElementById("place-another-order-btn")
+      .addEventListener("click", () => showScreen("menuHome"));
 
         showScreen("opening");
     }
 
-    // Run the application
-    initialize();
+  // Run the application
+  initialize();
 });

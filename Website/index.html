@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panic Party Pizzeria</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="app.js" defer></script>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="app-container">
 
         <div id="opening-screen" class="screen active">
@@ -108,6 +107,53 @@
             </div>
             <button type="button" id="goto-cart-btn-home" class="btn btn-secondary">View Cart (0)</button>
         </div>
+        <button type="button" id="goto-cart-btn-home" class="btn btn-secondary">
+          View Cart (0)
+        </button>
+        <button type="button" id="logout-btn" class="btn btn-secondary">
+          Sign Out
+        </button>
+      </div>
+
+      <div id="menu-category-screen" class="screen">
+        <h2 id="category-title">Menu</h2>
+        <div id="category-message" class="message"></div>
+        <div id="category-items-list" class="item-list"></div>
+        <button
+          type="button"
+          class="btn btn-secondary btn-back"
+          data-target="menu-home-screen"
+        >
+          Back
+        </button>
+      </div>
+
+      <div id="menu-pizza-screen" class="screen">
+        <form id="pizza-form">
+          <h2>Customize Your Pizza</h2>
+          <div id="pizza-message" class="message"></div>
+
+          <fieldset class="form-group">
+            <legend>Size</legend>
+            <label
+              ><input type="radio" name="size" value="S" checked /> S</label
+            >
+            <label><input type="radio" name="size" value="Med" /> Med</label>
+            <label
+              ><input type="radio" name="size" value="Large" /> Large</label
+            >
+            <label><input type="radio" name="size" value="XL" /> XL</label>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Crust</legend>
+            <div id="pizza-crust-options"></div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend>Sauce</legend>
+            <div id="pizza-sauce-options"></div>
+          </fieldset>
 
         <div id="menu-category-screen" class="screen">
             <h2 id="category-title">Menu</h2>
@@ -116,37 +162,17 @@
             <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back</button>
         </div>
 
-        <div id="menu-pizza-screen" class="screen">
-            <form id="pizza-form">
-                <h2>Customize Your Pizza</h2>
-                <div id="pizza-message" class="message"></div>
+        <div id="cart-items-list" class="cart-items"></div>
 
-                <fieldset class="form-group">
-                    <legend>Size</legend>
-                    <label><input type="radio" name="size" value="S" checked> S</label>
-                    <label><input type="radio" name="size" value="Med"> Med</label>
-                    <label><input type="radio" name="size" value="Large"> Large</label>
-                    <label><input type="radio" name="size" value="XL"> XL</label>
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <legend>Crust</legend>
-                    <div id="pizza-crust-options"></div>
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <legend>Sauce</legend>
-                    <div id="pizza-sauce-options"></div>
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <legend>Toppings</legend>
-                    <div id="pizza-toppings-list"></div>
-                </fieldset>
-
-                <button type="submit" class="btn btn-primary">Add to Cart</button>
-                <button type="button" class="btn btn-secondary btn-back" data-target="menu-home-screen">Back</button>
-            </form>
+        <div id="cart-summary" style="display: none">
+          <hr />
+          <div class="cart-total">
+            <strong>Total:</strong>
+            <strong id="cart-total-price">$0.00</strong>
+          </div>
+          <button type="button" id="goto-checkout-btn" class="btn btn-primary">
+            Checkout
+          </button>
         </div>
 
         <div id="cart-screen" class="screen">
@@ -274,6 +300,5 @@
         </div>
 
     </div>
-
-</body>
+  </body>
 </html>
